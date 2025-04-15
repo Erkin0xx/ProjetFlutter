@@ -4,7 +4,7 @@ class StoryModel {
   final String mediaPath;
   final DateTime createdAt;
   final bool isHighlight;
-  final Map<String, dynamic>? spotifyTrack; // 👈 Musique optionnelle
+  final Map<String, dynamic>? spotifyTrack; 
 
   StoryModel({
     required this.id,

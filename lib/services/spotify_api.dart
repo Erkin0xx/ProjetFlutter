@@ -7,7 +7,6 @@ class SpotifyApi {
   static String _clientSecret = dotenv.env['SPOTIFY_CLIENT_SECRET'] ?? '';
   static String _token = '';
 
-  /// 🔐 Authentification via Client Credentials
   static Future<void> authenticate() async {
     final credentials = base64.encode(utf8.encode('$_clientId:$_clientSecret'));
 
@@ -28,7 +27,6 @@ class SpotifyApi {
     _token = data['access_token'];
   }
 
-  /// 🔍 Recherche de morceaux avec preview + cover image (sans filtre preview)
   static Future<List<Map<String, String>>> searchTracks(String query) async {
     if (_token.isEmpty) await authenticate();
 
@@ -50,7 +48,6 @@ class SpotifyApi {
     final data = json.decode(response.body);
     final List<dynamic> items = data['tracks']['items'];
 
-    // 🔓 Pas de filtre preview ici
     return items.map<Map<String, String>>((track) {
       final map = track as Map<String, dynamic>;
 

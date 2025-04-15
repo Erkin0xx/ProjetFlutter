@@ -34,7 +34,7 @@ class UserProvider extends ChangeNotifier {
     String? prenom,
     String? nom,
     int? age,
-    String? bio, // ✅ Ajout ici
+    String? bio, 
   }) async {
     if (_currentUser == null) return;
 

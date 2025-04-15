@@ -100,7 +100,6 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  /// 👤 Carte Profil
                   if (appUser != null)
                     Card(
                       elevation: 2,
@@ -148,8 +147,6 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
                         ),
                       ),
                     ),
-
-                  /// ✏️ Formulaires
                   TextField(
                     controller: _prenomController,
                     decoration: const InputDecoration(
@@ -183,10 +180,7 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-
                   const SizedBox(height: 20),
-
-                  /// 💾 Bouton Enregistrer
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
@@ -202,21 +196,15 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 30),
                   const Divider(),
-
-                  /// 🌙 Dark mode toggle
                   SwitchListTile(
                     value: _darkMode,
                     onChanged: _toggleDarkMode,
                     title: const Text("Mode sombre"),
                     secondary: const Icon(Icons.dark_mode),
                   ),
-
                   const Divider(),
-
-                  /// 🚪 Déconnexion
                   ListTile(
                     leading: const Icon(Icons.logout),
                     title: const Text("Se déconnecter"),

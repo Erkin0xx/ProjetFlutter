@@ -54,7 +54,6 @@ class PostGalleryPage extends StatelessWidget {
               final user = userSnapshot.data;
               return Stack(
                 children: [
-                  // 📷 Image au centre (carrée)
                   Center(
                     child: AspectRatio(
                       aspectRatio: 1,
@@ -64,8 +63,6 @@ class PostGalleryPage extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  // 👤 Overlay header (avatar + pseudo + date)
                   if (user != null)
                     Positioned(
                       top: 50,
@@ -114,8 +111,6 @@ class PostGalleryPage extends StatelessWidget {
                         ),
                       ),
                     ),
-
-                  // 🔙 Bouton retour
                   Positioned(
                     top: 50,
                     right: 20,
@@ -131,8 +126,6 @@ class PostGalleryPage extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  // 📄 Caption + tagged user dans un container flouté
                   Positioned(
                     bottom: 30,
                     left: 16,

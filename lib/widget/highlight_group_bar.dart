@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/highlight_group_model.dart';
 import '../models/story_model.dart';
 import '../models/user_model.dart';
-import 'story_viewer_page.dart';
+import '../pages/story_viewer_page.dart';
 
 class HighlightGroupBar extends StatefulWidget {
   final String userId;

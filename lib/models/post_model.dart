@@ -6,7 +6,7 @@ class PostModel {
   final String imagePath;
   final String caption;
   final DateTime createdAt;
-  final String? taggedUserId; // 👤 nouvel attribut
+  final String? taggedUserId;
 
   PostModel({
     required this.id,

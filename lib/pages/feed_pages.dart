@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_project_app/pages/post_card.dart';
-import 'package:flutter_project_app/pages/story_bar.dart';
+import 'package:flutter_project_app/widget/post_card.dart';
+import 'package:flutter_project_app/widget/story_bar.dart';
 import 'package:provider/provider.dart';
 import '../models/post_model.dart';
 import '../models/post_provider.dart';
@@ -27,7 +27,7 @@ class FeedPage extends StatelessWidget {
       appBar: AppBar(title: const Text("Colegram")),
       body: Column(
         children: [
-          const StoryBar(), // ✅ Toujours affiché en haut
+          const StoryBar(),
           Expanded(
             child: FutureBuilder<List<PostModel>>(
               future: postProvider.fetchAllPosts(),

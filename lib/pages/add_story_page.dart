@@ -128,7 +128,6 @@ class _AddStoryPageState extends State<AddStoryPage> {
                 ),
               ),
 
-            /// 📸 Image
             GestureDetector(
               onTap: _pickImage,
               child: AspectRatio(
@@ -164,7 +163,6 @@ class _AddStoryPageState extends State<AddStoryPage> {
 
             const SizedBox(height: 24),
 
-            /// 🎵 Recherche Spotify
             SpotifySearchField(
               onTrackSelected: (track) {
                 setState(() => _selectedTrack = track);

@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../models/user_provider.dart';
 import '../models/post_model.dart';
 import '../models/post_provider.dart';
-import '../pages/highlight_group_bar.dart';
+import '../widget/highlight_group_bar.dart';
 import 'user_settings_page.dart';
 
 class AccountPage extends StatefulWidget {
@@ -81,7 +81,6 @@ class _AccountPageState extends State<AccountPage> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // 👤 Avatar sans bouton appareil photo
                 CircleAvatar(
                   radius: 45,
                   backgroundImage: user.avatarUrl != null
@@ -99,7 +98,6 @@ class _AccountPageState extends State<AccountPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Nom + Prénom (en gras)
                       Text(
                         "${user.prenom ?? ''} ${user.nom ?? ''}".trim(),
                         style:
@@ -108,7 +106,6 @@ class _AccountPageState extends State<AccountPage> {
                                 ),
                       ),
                       const SizedBox(height: 4),
-                      // @username + prénom
                       if (user.username != null)
                         Text(
                           "@${user.username}",
@@ -117,7 +114,6 @@ class _AccountPageState extends State<AccountPage> {
                               .bodySmall
                               ?.copyWith(color: Colors.grey),
                         ),
-                      // Âge
                       if (user.age != null)
                         Padding(
                           padding: const EdgeInsets.only(top: 2),
@@ -149,7 +145,6 @@ class _AccountPageState extends State<AccountPage> {
             ),
           ),
 
-          // ⭐ Highlights
           HighlightGroupBar(
             key: _highlightKey,
             userId: user.id,
@@ -158,7 +153,6 @@ class _AccountPageState extends State<AccountPage> {
 
           const Divider(height: 0),
 
-          // 🖼️ Publications
           Expanded(
             child: FutureBuilder<List<PostModel>>(
               future: context.read<PostProvider>().fetchUserPosts(user.id),

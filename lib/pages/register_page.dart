@@ -37,7 +37,6 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    // 🔥 Crée un document Firestore pour le nouvel utilisateur
     await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
       'email': email,
       'username': email.split('@')[0],

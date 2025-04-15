@@ -153,7 +153,6 @@ class _PostPageState extends State<PostPage> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            /// 🖼 Image preview carrée
             GestureDetector(
               onTap: _pickImage,
               child: AspectRatio(
@@ -189,7 +188,6 @@ class _PostPageState extends State<PostPage> {
 
             const SizedBox(height: 24),
 
-            /// 📝 Légende
             TextField(
               controller: _captionController,
               maxLines: 2,
@@ -201,7 +199,6 @@ class _PostPageState extends State<PostPage> {
 
             const SizedBox(height: 20),
 
-            /// 🔍 Tag utilisateur
             TextField(
               controller: _searchController,
               decoration: const InputDecoration(

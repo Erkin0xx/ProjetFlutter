@@ -11,7 +11,7 @@ final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
   ),
   brightness: Brightness.light,
-  scaffoldBackgroundColor: const Color(0xFFF8F8F8), // plus doux que blanc pur
+  scaffoldBackgroundColor: const Color(0xFFF8F8F8),
   appBarTheme: const AppBarTheme(
     elevation: 0,
     centerTitle: true,

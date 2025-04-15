@@ -21,12 +21,12 @@ GoRouter createAppRouter(ValueNotifier<ThemeMode> themeNotifier) {
       final location = state.uri.path;
       final isAuthPage = location == '/login' || location == '/register';
 
-      // 🔐 Si non connecté
+      // Si non connecté
       if (user == null) {
         return isAuthPage ? null : '/login';
       }
 
-      // 🔄 Récupère les infos du Firestore
+      // Récupère les infos du Firestore
       final doc = await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
@@ -38,12 +38,12 @@ GoRouter createAppRouter(ValueNotifier<ThemeMode> themeNotifier) {
           data['nom'] == null ||
           data['age'] == null;
 
-      // 🔁 Redirige vers /complete-profile si profil incomplet
+      // Redirige vers /complete-profile si profil incomplet
       if (isProfileIncomplete && location != '/complete-profile') {
         return '/complete-profile';
       }
 
-      // 🔁 Si déjà connecté, empêche retour à /login ou /register
+      // Si déjà connecté, empêche retour à /login ou /register
       if (!isProfileIncomplete && isAuthPage) {
         return '/home';
       }

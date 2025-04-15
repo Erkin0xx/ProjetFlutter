@@ -148,7 +148,6 @@ class _StoryViewerPageState extends State<StoryViewerPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 👤 Header
                 Padding(
                   padding: const EdgeInsets.fromLTRB(12, 16, 12, 10),
                   child: Row(
@@ -176,7 +175,6 @@ class _StoryViewerPageState extends State<StoryViewerPage>
                   ),
                 ),
 
-                // 🟢 Progress bar segmentée
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Row(
