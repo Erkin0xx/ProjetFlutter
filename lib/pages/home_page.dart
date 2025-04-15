@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_app/pages/feed_pages.dart';
 import 'package:flutter_project_app/pages/post_pages.dart';
@@ -13,7 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [
+  final List<Widget> _pages = const [
     FeedPage(),
     PostPage(),
     AccountPage(),
@@ -21,63 +22,86 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_currentIndex],
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
-      // ✅ BottomNavigationBar compacte et stylée
-      bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(
-          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-            selectedIconTheme: IconThemeData(size: 22),
-            unselectedIconTheme: IconThemeData(size: 20),
-            selectedLabelStyle: TextStyle(fontSize: 12),
-            unselectedLabelStyle: TextStyle(fontSize: 10),
-            type: BottomNavigationBarType.fixed,
-            elevation: 8,
-          ),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 10,
-                offset: const Offset(0, -1),
+    return Scaffold(
+      extendBody: true,
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        child: _pages[_currentIndex],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+            child: Container(
+              height: 70,
+              decoration: BoxDecoration(
+                color: isDark
+                    ? Colors.black.withOpacity(0.4)
+                    : Colors.white.withOpacity(0.85),
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(
+                  color: isDark ? Colors.white12 : Colors.black12,
+                  width: 1,
+                ),
               ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            ),
-            child: BottomNavigationBar(
-              currentIndex: _currentIndex,
-              onTap: (index) {
-                setState(() => _currentIndex = index);
-              },
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined),
-                  label: 'Feed',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.add_box_outlined),
-                  label: 'Poster',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person_outline),
-                  label: 'Compte',
-                ),
-              ],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildNavItem(
+                    icon: Icons.home,
+                    index: 0,
+                    context: context,
+                  ),
+                  _buildNavItem(
+                    icon: Icons.add_box,
+                    index: 1,
+                    context: context,
+                  ),
+                  _buildNavItem(
+                    icon: Icons.person,
+                    index: 2,
+                    context: context,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem({
+    required IconData icon,
+    required int index,
+    required BuildContext context,
+  }) {
+    final isSelected = _currentIndex == index;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final color = isSelected
+        ? theme.colorScheme.primary
+        : (isDark ? Colors.white60 : Colors.black54);
+
+    return GestureDetector(
+      onTap: () {
+        setState(() => _currentIndex = index);
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? theme.colorScheme.primary.withOpacity(0.1)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Icon(icon, color: color, size: 26),
       ),
     );
   }

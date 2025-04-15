@@ -3,9 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class PostModel {
   final String id;
   final String userId;
-  final String imagePath; // chemin local de l'image
+  final String imagePath;
   final String caption;
   final DateTime createdAt;
+  final String? taggedUserId; // 👤 nouvel attribut
 
   PostModel({
     required this.id,
@@ -13,6 +14,7 @@ class PostModel {
     required this.imagePath,
     required this.caption,
     required this.createdAt,
+    this.taggedUserId,
   });
 
   Map<String, dynamic> toMap() {
@@ -21,6 +23,7 @@ class PostModel {
       'imagePath': imagePath,
       'caption': caption,
       'createdAt': createdAt.toIso8601String(),
+      'taggedUserId': taggedUserId,
     };
   }
 
@@ -36,6 +39,7 @@ class PostModel {
       imagePath: data['imagePath'],
       caption: data['caption'],
       createdAt: createdAt,
+      taggedUserId: data['taggedUserId'],
     );
   }
 }

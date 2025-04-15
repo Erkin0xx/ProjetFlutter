@@ -40,7 +40,6 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    // Connexion uniquement (pas de création ici)
     final firebaseUser =
         await _authService.signInWithEmailPassword(email, password);
 
@@ -69,7 +68,6 @@ class _LoginPageState extends State<LoginPage> {
         context.go('/home');
       }
     } else {
-      // Aucun profil trouvé → compléter le profil
       context.go('/complete-profile');
     }
 
@@ -80,36 +78,93 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final baseTextColor = isDark ? Colors.white : Colors.black87;
+    final iconColor = isDark ? Colors.white : Colors.black54;
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Connexion")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            if (_error != null)
-              Text(_error!, style: const TextStyle(color: Colors.red)),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: "Email"),
-            ),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: "Mot de passe"),
-            ),
-            const SizedBox(height: 20),
-            _isLoading
-                ? const CircularProgressIndicator()
-                : ElevatedButton.icon(
-                    onPressed: _login,
-                    icon: const Icon(Icons.login),
-                    label: const Text("Se connecter"),
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.blur_on_rounded, size: 80, color: iconColor),
+                const SizedBox(height: 16),
+                Text(
+                  "Connexion",
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: baseTextColor,
                   ),
-            TextButton(
-              onPressed: () => context.go('/register'),
-              child: const Text("Pas encore de compte ? S’inscrire"),
+                ),
+                const SizedBox(height: 32),
+                if (_error != null)
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    margin: const EdgeInsets.only(bottom: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.error_outline,
+                            color: Colors.redAccent),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            _error!,
+                            style: const TextStyle(color: Colors.redAccent),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                TextField(
+                  controller: _emailController,
+                  style: TextStyle(color: baseTextColor),
+                  decoration: InputDecoration(
+                    labelText: "Email",
+                    labelStyle: TextStyle(color: baseTextColor),
+                    prefixIcon: Icon(Icons.mail_outline, color: iconColor),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  style: TextStyle(color: baseTextColor),
+                  decoration: InputDecoration(
+                    labelText: "Mot de passe",
+                    labelStyle: TextStyle(color: baseTextColor),
+                    prefixIcon: Icon(Icons.lock_outline, color: iconColor),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                _isLoading
+                    ? const CircularProgressIndicator()
+                    : SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton.icon(
+                          onPressed: _login,
+                          icon: const Icon(Icons.login),
+                          label: const Text("Se connecter"),
+                        ),
+                      ),
+                TextButton(
+                  onPressed: () => context.go('/register'),
+                  child: Text(
+                    "Pas encore de compte ? S’inscrire",
+                    style: TextStyle(color: Colors.grey[600]),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -57,7 +57,8 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
         age == null ||
         _selectedImage == null) {
       setState(
-          () => _error = "Tous les champs sont requis, y compris la photo.");
+        () => _error = "Tous les champs sont requis, y compris la photo.",
+      );
       return;
     }
 
@@ -89,50 +90,93 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final baseTextColor = isDark ? Colors.white : Colors.black87;
+    final iconColor = isDark ? Colors.white : Colors.black54;
+
     return Scaffold(
       appBar: AppBar(title: const Text("Compléter mon profil")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: SafeArea(
         child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
           child: Column(
             children: [
               if (_error != null)
-                Text(_error!, style: const TextStyle(color: Colors.red)),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  margin: const EdgeInsets.only(bottom: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.red.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.error_outline, color: Colors.redAccent),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          _error!,
+                          style: const TextStyle(color: Colors.redAccent),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               GestureDetector(
                 onTap: _pickImage,
                 child: CircleAvatar(
-                  radius: 50,
+                  radius: 55,
+                  backgroundColor: isDark ? Colors.grey[800] : Colors.grey[200],
                   backgroundImage: _selectedImage != null
                       ? FileImage(_selectedImage!)
                       : null,
                   child: _selectedImage == null
-                      ? const Icon(Icons.add_a_photo, size: 30)
+                      ? Icon(Icons.add_a_photo, size: 30, color: iconColor)
                       : null,
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
               TextField(
                 controller: _prenomController,
-                decoration: const InputDecoration(labelText: "Prénom"),
+                style: TextStyle(color: baseTextColor),
+                decoration: InputDecoration(
+                  labelText: "Prénom",
+                  labelStyle: TextStyle(color: baseTextColor),
+                  prefixIcon: Icon(Icons.person, color: iconColor),
+                ),
               ),
               const SizedBox(height: 12),
               TextField(
                 controller: _nomController,
-                decoration: const InputDecoration(labelText: "Nom"),
+                style: TextStyle(color: baseTextColor),
+                decoration: InputDecoration(
+                  labelText: "Nom",
+                  labelStyle: TextStyle(color: baseTextColor),
+                  prefixIcon: Icon(Icons.person_outline, color: iconColor),
+                ),
               ),
               const SizedBox(height: 12),
               TextField(
                 controller: _ageController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: "Âge"),
+                style: TextStyle(color: baseTextColor),
+                decoration: InputDecoration(
+                  labelText: "Âge",
+                  labelStyle: TextStyle(color: baseTextColor),
+                  prefixIcon: Icon(Icons.cake, color: iconColor),
+                ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
               _loading
                   ? const CircularProgressIndicator()
-                  : ElevatedButton.icon(
-                      onPressed: _saveProfile,
-                      icon: const Icon(Icons.check),
-                      label: const Text("Valider mon profil"),
+                  : SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: _saveProfile,
+                        icon: const Icon(Icons.check),
+                        label: const Text("Valider mon profil"),
+                      ),
                     ),
             ],
           ),
